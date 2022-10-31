@@ -6,10 +6,12 @@ const api = require("./routes/index");
 const app = express();
 const PORT = 3000;
 
-// Adding middleware for json parsing & static file
+// Adding middleware for json parsing, static file & url encoded form data
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 app.use("/api", api);
+app.use(express.static("public"));
+
 
 // get Route for homepage (index.html)
 app.get("/", (req, res) => {
