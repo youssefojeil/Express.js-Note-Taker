@@ -2,7 +2,7 @@ const notes = require("express").Router();
 
 // Get route for retreiving notes
 notes.get("/", (req, res) => {
-    
+    console.log(`Notes ${req.method} get requested`);
 })
 
 
@@ -10,7 +10,7 @@ notes.get("/", (req, res) => {
 notes.post("/", (req, res) => {
    // log post request body
     console.log(req.body);
-
+    console.log(`Notes ${req.method} method requested`)
     const {title, text} = req.body
 
     const note = {
@@ -23,6 +23,8 @@ notes.post("/", (req, res) => {
         body: note,
     };
 
+    // loggin response
+    console.log(response);
     res.json(response);
 })
 
