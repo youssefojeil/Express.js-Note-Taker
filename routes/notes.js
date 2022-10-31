@@ -1,5 +1,6 @@
+// setup router & import helper functions 
 const notes = require("express").Router();
-const { readFromFile, writeToFile, readAndAppend } = require("../helpers/fsUtils");
+const { readFromFile, readAndAppend, uuid } = require("../helpers/fsUtils");
 
 // Get route for retreiving notes
 notes.get("/", (req, res) => {
@@ -27,6 +28,7 @@ notes.post("/", (req, res) => {
         const newNote = {
             title,
             text,
+            id: uuid(),
         };
 
         readAndAppend(newNote, "./db/db.json")
@@ -44,6 +46,18 @@ notes.post("/", (req, res) => {
     // logging response
     console.log(response);
     
+})
+/*
+// GET route for deleting 
+notes.get("/:id", (req, res) => {
+    res.js
+}) */
+
+// DELETE route for deleting notes
+
+notes.delete("/:id", (req, res) => {
+    console.log(`Notes ${req.method} method requested`);
+    res.send("test");
 })
 
 module.exports = notes;
