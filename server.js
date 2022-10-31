@@ -9,9 +9,14 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.static("public"));
 
-// get homepage (index.html)
+// get Route for homepage (index.html)
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
+});
+
+// get Route for notes page
+app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
 // listen on port 3000
