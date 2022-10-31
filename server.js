@@ -4,7 +4,7 @@ const api = require("./routes/index.js");
 
 // invoke express & set port to 3000
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Adding middleware for json parsing, static file & url encoded form data
 app.use(express.json());
