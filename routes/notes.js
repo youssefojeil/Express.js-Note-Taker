@@ -20,20 +20,30 @@ notes.post("/", (req, res) => {
     console.log(`Notes ${req.method} method requested`)
     const {title, text} = req.body
 
-    const note = {
-        title,
-        text,
-    };
+    // check if text & title are valid
+    if(title && text) {
 
-    const response = {
-        status: "success",
-        body: note,
-    };
+        // create new note
+        const newNote = {
+            title,
+            text,
+        };
 
-    // loggin response
+        readAndAppend(newNote, "./db/db.json")
+    
+        const response = {
+            status: "success",
+            body: note,
+        };
+        res.json(response);
+    }
+    else{
+        res.json("Error in posting feedback");
+    }
+
+    // logging response
     console.log(response);
-    //res.send("test");
-    res.json(response);
+    
 })
 
 module.exports = notes;
