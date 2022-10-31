@@ -58,6 +58,9 @@ notes.get("/:id", (req, res) => {
 notes.delete("/:id", (req, res) => {
     console.log(`Notes ${req.method} method requested`);
     res.send("test");
+    console.log(`${req.params.id}`);
+
+    //const note = 
 })
 
 module.exports = notes;
