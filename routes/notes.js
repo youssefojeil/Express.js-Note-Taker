@@ -1,10 +1,15 @@
 const notes = require("express").Router();
+const { readFromFile, writeToFile, readAndAppend } = require("../helpers/fsUtils");
 
 // Get route for retreiving notes
 notes.get("/", (req, res) => {
     console.log(`Notes ${req.method} get requested`);
     // Must handle the response
-    res.send("Test API");
+    //res.send("Test API");
+
+    // read from db.json file and send as response body
+    // This will post any notes to the /notes page from the /api/notes
+    readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 })
 
 
