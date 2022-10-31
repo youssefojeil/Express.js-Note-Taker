@@ -3,6 +3,8 @@ const notes = require("express").Router();
 // Get route for retreiving notes
 notes.get("/", (req, res) => {
     console.log(`Notes ${req.method} get requested`);
+    // Must handle the response
+    res.send("Test API");
 })
 
 
@@ -25,6 +27,7 @@ notes.post("/", (req, res) => {
 
     // loggin response
     console.log(response);
+    //res.send("test");
     res.json(response);
 })
 
