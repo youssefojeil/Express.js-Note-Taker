@@ -2,6 +2,7 @@
 const notes = require("express").Router();
 const { readFromFile, readAndAppend, uuid } = require("../helpers/fsUtils");
 
+
 // Get route for retreiving notes
 notes.get("/", (req, res) => {
     console.log(`Notes ${req.method} get requested`);
@@ -31,11 +32,16 @@ notes.post("/", (req, res) => {
             id: uuid(),
         };
 
+       //let  newNote2 = newNote.map((note, index) => ({...note, id: index + 1}))
+        //db.push(newNote);
+        //let newNote2 = db.map((note, index) => ({...note, id: index + 1}));
+        
+        //console.log(`This is new note2: ${newNote2}`);
         readAndAppend(newNote, "./db/db.json")
     
         const response = {
             status: "success",
-            body: note,
+            body: newNote,
         };
         res.json(response);
     }
@@ -54,13 +60,16 @@ notes.get("/:id", (req, res) => {
 }) */
 
 // DELETE route for deleting notes
-
 notes.delete("/:id", (req, res) => {
     console.log(`Notes ${req.method} method requested`);
     res.send("test");
+    // read db.json, store into array, 
+    // use filter method, filter out everything that has id other than this id
+    // write new array to the file
+    // new array will have all the other notes and we can respond with that new array
+    
     console.log(`${req.params.id}`);
 
-    //const note = 
 })
 
 module.exports = notes;
