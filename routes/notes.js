@@ -1,5 +1,6 @@
 // setup router & import helper functions 
 const notes = require("express").Router();
+const fs = require("fs");
 const { readFromFile, readAndAppend, uuid } = require("../helpers/fsUtils");
 
 
@@ -53,16 +54,26 @@ notes.post("/", (req, res) => {
     console.log(response);
     
 })
-/*
-// GET route for deleting 
-notes.get("/:id", (req, res) => {
-    res.js
-}) */
+
 
 // DELETE route for deleting notes
 notes.delete("/:id", (req, res) => {
+    
     console.log(`Notes ${req.method} method requested`);
     res.send("test");
+    fs.readFile("./db/db.json", "utf8", (err, notes) => {
+        if(err) {
+            console.log(err);
+        }
+        else{
+            const newData = JSON.parse(notes);
+            console.log(newData);
+
+            const newNotes = newData.filter(note => note.id !== req.params.id);
+            console.log(newNotes);
+        }
+    })
+    
     // read db.json, store into array, 
     // use filter method, filter out everything that has id other than this id
     // write new array to the file
