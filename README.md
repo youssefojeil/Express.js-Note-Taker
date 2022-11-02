@@ -35,7 +35,7 @@ nodemon
 ```
 
 ## Demo
-[Heroku Deployement Link](https://possessed-corpse-09283.herokuapp.com/notes)
+[Heroku Deployment Link](https://possessed-corpse-09283.herokuapp.com/notes)
 
 <img src="./images/note-page.png" />
 
