@@ -1,7 +1,7 @@
 // setup router & import helper functions 
 const notes = require("express").Router();
 const fs = require("fs");
-const { readFromFile, readAndAppend, uuid } = require("../helpers/fsUtils");
+const { readFromFile, readAndAppend, writeToFile, uuid } = require("../helpers/fsUtils");
 
 
 // Get route for retreiving notes
@@ -26,20 +26,16 @@ notes.post("/", (req, res) => {
     // check if text & title are valid
     if(title && text) {
 
-        // create new note
+        // create new note & add unique ID
         const newNote = {
             title,
             text,
             id: uuid(),
         };
-
-       //let  newNote2 = newNote.map((note, index) => ({...note, id: index + 1}))
-        //db.push(newNote);
-        //let newNote2 = db.map((note, index) => ({...note, id: index + 1}));
-        
-        //console.log(`This is new note2: ${newNote2}`);
+        // read note file & append new note to note file
         readAndAppend(newNote, "./db/db.json")
     
+        // create success response with new note
         const response = {
             status: "success",
             body: newNote,
@@ -60,27 +56,29 @@ notes.post("/", (req, res) => {
 notes.delete("/:id", (req, res) => {
     
     console.log(`Notes ${req.method} method requested`);
-    res.send("test");
+
+    // read notes file
     fs.readFile("./db/db.json", "utf8", (err, notes) => {
         if(err) {
             console.log(err);
         }
         else{
+            // store notes in array
             const newData = JSON.parse(notes);
             console.log(newData);
-
+            // filter array, keep all notes except for note selected to delete
             const newNotes = newData.filter(note => note.id !== req.params.id);
+            // log new notes after filtering the deleted note
             console.log(newNotes);
+            writeToFile("./db/db.json", newNotes);
+         
+            const response = {
+                status: "success",
+                body: newNotes,
+            };
+            res.json(response);
         }
     })
-    
-    // read db.json, store into array, 
-    // use filter method, filter out everything that has id other than this id
-    // write new array to the file
-    // new array will have all the other notes and we can respond with that new array
-    
-    console.log(`${req.params.id}`);
-
 })
 
 module.exports = notes;
